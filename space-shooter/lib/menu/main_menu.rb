@@ -22,6 +22,10 @@ class MainMenu
 
   end
 
+  def update
+
+  end
+
   def draw
     @title.draw(@x,0,0)
     @options.each do |option|
@@ -29,13 +33,39 @@ class MainMenu
       option.draw(is_selected)
     end #fin each
 
+  end
+
+  def move_to_different_option
+    @current_option = if @current_option == OPTIONS[:play]
+     OPTIONS[:exit]
+    else
+     OPTIONS[:play]
+    end
+  end
+
+  def select_option
+    case @current_option
+
+    when OPTIONS[:play]
+
+      @window.show_level
+
+    when OPTIONS[:exit]
+      @window.close
+    end
 
   end
 
   def button_down(id)
-    if id == Gosu::KbEscape
-      @window.close
 
+    case id
+
+    when Gosu::KbEscape
+      @window.close
+    when Gosu::KbDown,Gosu::KbUp
+      move_to_different_option
+    when Gosu::KbSpace
+      select_option
     end
 
   end
